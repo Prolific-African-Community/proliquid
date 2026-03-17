@@ -3,17 +3,25 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@mui/material": "latest",
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
     "next": "latest",
+    "prisma": "^5.22.0",
     "react": "latest",
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "latest",
     "@types/react": "latest",
     "autoprefixer": "latest",
