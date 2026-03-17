@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ne tue pas tous les box-shadows, sinon Tailwind rings/shadows ne marchent plus */
+button {
+  outline: none;
+}
