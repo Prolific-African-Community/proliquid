@@ -9,40 +9,40 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+useEffect(() => {
+  const token = localStorage.getItem('token');
 
-    if (!token) {
-      router.replace('/login');
-      return;
-    }
+  if (!token) {
+    setIsLoading(false);
+    router.replace('/login');
+    return;
+  }
 
-    const fetchFunds = async () => {
-      try {
-        const response = await fetch('/api/funds', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        const responseData = await response.json();
-
-        if (!response.ok) {
-          throw new Error(responseData.message ?? 'Unable to fetch funds');
+  const fetchFunds = async () => {
+    try {
+      const response = await fetch('/api/funds', {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+      });
 
-        setData(responseData);
-      } catch (fetchError) {
-        setError(fetchError instanceof Error ? fetchError.message : 'Unable to fetch funds');
-      } finally {
-        setIsLoading(false);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message ?? 'Unable to fetch funds');
       }
-    };
 
-    fetchFunds();
-  }, [router]);
+      setData(responseData);
+    } catch (fetchError) {
+      setError(fetchError instanceof Error ? fetchError.message : 'Unable to fetch funds');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  fetchFunds();
+}, []);
+  
   return (
     <main className="min-h-screen bg-slate-100 p-6 md:p-10">
       <div className="max-w-4xl mx-auto rounded-xl bg-white shadow-md p-6">
