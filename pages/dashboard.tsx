@@ -92,6 +92,7 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
           <button
             type="button"
+            onClick={() => router.push('/funds/create')}
             className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
           >
             Create Fund
