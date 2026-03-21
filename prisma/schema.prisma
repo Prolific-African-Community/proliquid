@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  GP
+  LP
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  passwordHash String
+  role      UserRole
+  createdAt DateTime @default(now())
+
+  funds     Fund[] 
+}
+
+model Fund {
+  id        String   @id @default(cuid())
+  name      String
+  currency  String
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  transactions Transaction[]
+}
+
+model Transaction {
+  id     String          @id @default(cuid())
+  fundId String
+  amount Decimal         @db.Decimal(18, 2)
+  date   DateTime        @default(now())
+  type   TransactionType
+
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([fundId])
+}
